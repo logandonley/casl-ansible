@@ -1,0 +1,28 @@
+---
+
+- name: "Loading Jenkinsfile parameters for '{{ entry.object }}'"
+  include_vars:
+    file: "{{ item.jenkinsfile_params }}"
+  when:
+  - item.jenkinsfile_params is defined
+  - item.jenkinsfile_params != ''
+
+- name: "Process Jenkinsfile for '{{ item.name }}'"
+  set_fact:
+    jenkinsfile: "{{ lookup('template', '' + item.jenkinsfile ) }}"
+
+- name: "Create temporary file for processed build template"
+  tempfile:
+    state: directory
+  register: temp_dir
+
+- name: "Applying Jenkinsfile to build template (and storing as a temp file)"
+  template:
+    src: "{{ item.template }}"
+    dest: "{{ temp_dir.path }}/template.json"
+
+
+- name: "Assigning new fact for temporary template"
+  set_fact:
+    new_template: "{{ temp_dir.path }}/template.json"
+

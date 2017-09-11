@@ -1,5 +1,17 @@
 ---
 
+- name: "Process the Jenkinsfile template for '{{ entry.object }}' with params"
+  include: process-jenkinsfile.yml
+  with_items:
+  - "{{ entry.content }}"
+  when:
+  - item.template is defined
+  - item.template != ''
+  - item.params is defined
+  - item.params != ''
+  - item.jenkinsfile is defined
+  - item.jenkinsfile != ''
+
 - name: "Create OpenShift objects for '{{ entry.object }}' with params"
   include: process-one-entry.yml
   with_items:

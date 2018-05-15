@@ -13,5 +13,5 @@
   when: hosting_infrastructure == "gcp"
 
 # Provision Azure Instances
-- import_playbook: provision-azure.yml
+- import_playbook: azure/provision.yml
   when: hosting_infrastructure == "azure"

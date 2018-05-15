@@ -4,6 +4,6 @@
   when:
   - hosting_infrastructure == 'aws'
 
-- import_playbook: stop-azure.yml
+- import_playbook: azure/stop.yml
   when:
   - hosting_infrastructure == 'azure'
